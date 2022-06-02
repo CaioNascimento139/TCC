@@ -1,0 +1,113 @@
+import 'dart:developer';
+
+import 'package:flutter/material.dart';
+import 'package:flutter_application_1/secoundroute.dart';
+
+void main() {
+  runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Flutter Demo',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+    );
+  }
+}
+
+class MyHomePage extends StatefulWidget {
+  const MyHomePage({Key? key, required this.title}) : super(key: key);
+  final String title;
+
+  @override
+  State<MyHomePage> createState() => _MyHomePageState();
+}
+
+TextEditingController meuController = TextEditingController();
+TextEditingController meuController2 = TextEditingController();
+
+int soma(int num1, int num2) {
+  return num1 + num2;
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Fisrt Route'),
+      ),
+      body: Center(
+        child: Column(
+          children: [
+            TextField(
+              controller: meuController,
+            ),
+            TextField(
+              controller: meuController2,
+            ),
+            IconButton(
+                onPressed: () {
+                  log(soma(int.parse(meuController.text),
+                          int.parse(meuController2.text))
+                      .toString());
+
+                  log('Vou mostrar o resultado');
+                },
+                icon: Icon(Icons.abc)),
+            GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const Secoundroute()));
+                },
+                child: Text('PODE TOCAR')),
+            Center(
+              child: ElevatedButton(
+                child: const Text('Open route'),
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const Secoundroute()));
+                },
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+-------------------------------------------------------------------------------------------------------------------------
+
+import 'package:flutter/material.dart';
+
+class Secoundroute extends StatelessWidget {
+  const Secoundroute({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Second Route'),
+      ),
+      body: Center(
+        child: ElevatedButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          child: const Text('Volte!'),
+        ),
+      ),
+    );
+  }
+}
